@@ -10,31 +10,19 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Title from './Title';
 
-function preventDefault(event) {
-    event.preventDefault();
-}
-
 const useStyles = makeStyles((theme) => {
     return {
-        scrollPane: {
-            overflow: 'auto'
-        },
         table: {
             minWidth: 100,
         },
-        showMore: {
+        showAll: {
             marginTop: theme.spacing(3),
         }
     };
 });
 
-export default function Expenses() {
+export default function Expenses(props) {
     const [expenses, setExpenses] = React.useState([]);
-
-    const [showMoreExpenses, setShowMoreExpenses] = React.useState(false);
-    const toggleMoreExpenses = () => {
-        setShowMoreExpenses(!showMoreExpenses);
-    }
 
     React.useEffect(() => {
         async function fetchAllExpenses() {
@@ -42,7 +30,7 @@ export default function Expenses() {
                 .then(res => res.json())
                 .then(data => {
                     const sortedExpenses = _.sortBy(data, (row) => row.username);
-                    setExpenses(sortedExpenses)
+                    setExpenses(sortedExpenses);
                 })
                 .catch(error => console.log(error));
         }
@@ -50,22 +38,22 @@ export default function Expenses() {
         fetchAllExpenses();
     }, []);
 
-    const classes = useStyles();;
+    const classes = useStyles();
     return (
         <React.Fragment>
             <Title>Expenses</Title>
-            <Paper className={classes.scrollPane}>
+            <Paper>
                 <Table className={classes.table}>
                     <TableHead>
                         <TableRow>
                             <TableCell>Name</TableCell>
                             <TableCell>Payee</TableCell>
                             <TableCell>Owner</TableCell>
-                            <TableCell align='right'>Debit</TableCell>
+                            <TableCell align='right'>Amount</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {expenses.map((expense) => (
+                        {_.take(expenses, props.showAll ? expenses.length : 3).map((expense) => (
                             <TableRow key={expense._id}>
                                 <TableCell>{expense.name}</TableCell>
                                 <TableCell>{expense.payee}</TableCell>
@@ -76,9 +64,9 @@ export default function Expenses() {
                     </TableBody>
                 </Table>
             </Paper>
-            <div className={classes.showMore}>
-                <Link color='primary' href='#' onClick={toggleMoreExpenses}>
-                    Show more
+            <div className={classes.showAll}>
+                <Link color='primary' href='#' onClick={props.toggleShowAll}>
+                    {props.showAll ? 'Show less' : 'Show ' + (expenses.length - 3) + ' more'}
                 </Link>
             </div>
         </React.Fragment >

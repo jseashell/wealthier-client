@@ -121,7 +121,11 @@ const useStyles = makeStyles((theme) => ({
   },
   fixedHeight: {
     height: 340,
+    overflow: 'auto'
   },
+  maxHeight: {
+    height: 'wrap-content'
+  }
 }));
 
 export default function Dashboard() {
@@ -132,7 +136,13 @@ export default function Dashboard() {
     setOpen(!open);
   };
 
+  const [showAllExpenses, setShowAllExpenses] = React.useState(false);
+  const toggleShowAllExpenses = () => {
+    setShowAllExpenses(!showAllExpenses);
+  };
+
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+  const maxHeightPaper = clsx(classes.paper, classes.maxHeight);
 
   return (
     <div className={classes.root}>
@@ -208,8 +218,11 @@ export default function Dashboard() {
             </Grid>
             {/* Expenses */}
             <Grid item xs={12}>
-              <Paper className={fixedHeightPaper}>
-                <Expenses />
+              <Paper className={showAllExpenses ? maxHeightPaper : fixedHeightPaper}>
+                <Expenses
+                  toggleShowAll={toggleShowAllExpenses}
+                  showAll={showAllExpenses}
+                />
               </Paper>
             </Grid>
             {/* Schedule */}
