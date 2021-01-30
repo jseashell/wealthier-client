@@ -8,18 +8,12 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-
-import { DataGrid } from '@material-ui/data-grid';
 import Title from './Title';
 
 const useStyles = makeStyles((theme) => {
     return {
         table: {
             minWidth: 100,
-        },
-        dataGridContainer: {
-            display: 'flex',
-            height: '100%'
         },
         showAll: {
             marginTop: theme.spacing(3),
@@ -35,13 +29,8 @@ export default function Expenses(props) {
             await fetch('/expense/all')
                 .then(res => res.json())
                 .then(data => {
-                    setExpenses(
-                        _.sortBy(data, expense => expense.name)
-                            .map(expense => {
-                                expense.id = expense._id; // Data-Grid requires all rows have a unique "id" property
-                                delete expense._id;
-                                return expense;
-                            }));
+                    const sortedExpenses = _.sortBy(data, (row) => row.username);
+                    setExpenses(sortedExpenses);
                 })
                 .catch(error => console.log(error));
         }
@@ -49,42 +38,37 @@ export default function Expenses(props) {
         fetchAllExpenses();
     }, []);
 
-    const columns = [{
-        field: 'name',
-        headerName: 'Name',
-        description: 'Name of the expense. This name helps you personalize your expenses.',
-        flex: .30
-    }, {
-        field: 'payee',
-        headerName: 'Payee',
-        description: 'The party to which the expense is owed.',
-        flex: .40
-    }, {
-        field: 'userFirstName',
-        headerName: 'Owner',
-        description: 'The person responsible for this expense.',
-        flex: .15
-    }, {
-        field: 'value',
-        headerName: 'Amount',
-        description: 'The amount of this expense.',
-        type: 'number',
-        flex: .15,
-        valueFormatter: (params) => `$${params.getValue('value').toFixed(2) || ''}`
-    }];
-
     const classes = useStyles();
     return (
         <React.Fragment>
             <Title>Expenses</Title>
-            <Paper className={classes.dataGridContainer}>
-                <DataGrid
-                    rows={expenses}
-                    columns={columns}
-                    pageSize={0}
-                // checkboxSelection // don't need this yet
-                />
+            <Paper>
+                <Table className={classes.table}>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Name</TableCell>
+                            <TableCell>Payee</TableCell>
+                            <TableCell>Owner</TableCell>
+                            <TableCell align='right'>Amount</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {_.take(expenses, props.showAll ? expenses.length : 3).map((expense) => (
+                            <TableRow key={expense._id}>
+                                <TableCell>{expense.name}</TableCell>
+                                <TableCell>{expense.payee}</TableCell>
+                                <TableCell>{expense.userFirstName}</TableCell>
+                                <TableCell align='right'>${expense.value.toFixed(2)}</TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
             </Paper>
+            <div className={classes.showAll}>
+                <Link color='primary' href='#' onClick={props.toggleShowAll}>
+                    {props.showAll ? 'Show less' : 'Show ' + (expenses.length - 3) + ' more'}
+                </Link>
+            </div>
         </React.Fragment >
     );
 }

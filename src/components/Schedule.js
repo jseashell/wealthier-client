@@ -2,8 +2,6 @@ import * as React from 'react';
 import _ from 'lodash';
 import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import { DataGrid } from '@material-ui/data-grid';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -41,54 +39,11 @@ export default function Schedule() {
     fetchPaymentSchedule();
   }, []);
 
-  const formatCurrency = (key, params) => {
-    return `$${params.getValue(key).toFixed(2) || ''}`;
-  }
-
-  const columns = [{
-    field: 'date',
-    headerName: 'Date',
-    description: 'Date in which a debt payment should occur.',
-    flex: .30
-  }, {
-    field: 'name',
-    headerName: 'Credit Card',
-    description: 'The party to which the debt is owed.',
-    flex: .40
-  }, {
-    field: 'previousBalance',
-    headerName: 'Previous Balance',
-    description: "The debt balance prior to this date's payment amount.",
-    flex: .15,
-    valueFormatter: (params) => formatCurrency('previousBalance', params)
-  }, {
-    field: 'paymentAmount',
-    headerName: 'Amount',
-    description: 'The amount of this payment.',
-    type: 'number',
-    flex: .15,
-    valueFormatter: (params) => formatCurrency('paymentAmount', params)
-  }, {
-    field: 'nextBalance',
-    headerName: 'Next Balance',
-    description: "The debt balance after applying this date's payment amount.",
-    flex: .15,
-    valueFormatter: (params) => formatCurrency('nextBalance', params)
-  }];
-
   const classes = useStyles();
   return (
     <React.Fragment>
       <Title>Payment Schedule</Title>
-      <Paper className={classes.dataGridContainer}>
-        <DataGrid
-          rows={expenses}
-          columns={columns}
-          pageSize={0}
-        // checkboxSelection // don't need this yet
-        />
-      </Paper>
-      {/* <Table className='table' size='small'>
+      <Table className='table' size='small'>
         <TableHead>
           <TableRow>
             <TableCell>Date</TableCell>
@@ -109,7 +64,7 @@ export default function Schedule() {
             </TableRow>
           ))}
         </TableBody>
-      </Table> */}
+      </Table>
       <div className={classes.seeMore}>
         <Link color='primary' href='#' onClick={preventDefault}>
           See more orders

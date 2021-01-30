@@ -3,8 +3,6 @@ import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Title from './Title';
-import { Locale } from '@js-joda/locale_en'
-import { LocalDate, DateTimeFormatter } from '@js-joda/core';
 
 function preventDefault(event) {
   event.preventDefault();
@@ -12,35 +10,39 @@ function preventDefault(event) {
 
 const useStyles = makeStyles((theme) => {
   return {
-    asOfDate: {
+    depositContext: {
       flex: 1,
     }
   };
 });
 
-export default function RemainingDebt() {
-  const [remainingDebt, setRemainingDebt] = React.useState(0);
+export default function RemainingBalance() {
+  const [data, setData] = React.useState({ remainingBalance: null });
 
   React.useEffect(() => {
-    async function fetchRemainingDebt() {
+    async function fetchRemainingBalance() {
       await fetch('/debt/all')
         .then(res => res.json())
-        .then(data => setRemainingDebt(data.map(debt => debt.value).reduce((a, b) => a + b, 0)))
+        .then(data => {
+          setData({
+            remainingBalance: data.map(debt => debt.value).reduce((a, b) => a + b, 0)
+          })
+        })
         .catch(error => console.log(error));
     }
 
-    fetchRemainingDebt();
+    fetchRemainingBalance();
   }, []);
 
   const classes = useStyles();
   return (
     <React.Fragment>
-      <Title>Remaining Debt</Title>
+      <Title>Remaining Balance</Title>
       <Typography component='p' variant='h4'>
-        ${remainingDebt.toFixed(2)}
+        {data.remainingBalance}
       </Typography>
-      <Typography color='textSecondary' className={classes.asOfDate}>
-        as of {LocalDate.now().format(DateTimeFormatter.ofPattern('MMMM dd, uuuu').withLocale(Locale.ENGLISH))}
+      <Typography color='textSecondary' className={classes.depositContext}>
+        on {new Date().toLocaleString()}
       </Typography>
       <div>
         <Link color='primary' href='#' onClick={preventDefault}>

@@ -19,7 +19,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
-import RemainingDebt from './RemainingBalance';
+import RemainingBalance from './RemainingBalance';
 import Schedule from './Schedule';
 import Debts from './Debts';
 import Incomes from './Incomes';
@@ -123,10 +123,9 @@ const useStyles = makeStyles((theme) => ({
     height: 340,
     overflow: 'auto'
   },
-  fixedHeightExpenses: {
-    height: 500,
-    overflow: 'none'
-  },
+  maxHeight: {
+    height: 'wrap-content'
+  }
 }));
 
 export default function Dashboard() {
@@ -137,8 +136,13 @@ export default function Dashboard() {
     setOpen(!open);
   };
 
+  const [showAllExpenses, setShowAllExpenses] = React.useState(false);
+  const toggleShowAllExpenses = () => {
+    setShowAllExpenses(!showAllExpenses);
+  };
+
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-  const fixedHeightPaperExpenses = clsx(classes.paper, classes.fixedHeightExpenses);
+  const maxHeightPaper = clsx(classes.paper, classes.maxHeight);
 
   return (
     <div className={classes.root}>
@@ -209,13 +213,16 @@ export default function Dashboard() {
             {/* Remaining Balance */}
             <Grid item xs={3}>
               <Paper className={fixedHeightPaper}>
-                <RemainingDebt />
+                <RemainingBalance />
               </Paper>
             </Grid>
             {/* Expenses */}
             <Grid item xs={12}>
-              <Paper className={fixedHeightPaperExpenses}>
-                <Expenses />
+              <Paper className={showAllExpenses ? maxHeightPaper : fixedHeightPaper}>
+                <Expenses
+                  toggleShowAll={toggleShowAllExpenses}
+                  showAll={showAllExpenses}
+                />
               </Paper>
             </Grid>
             {/* Schedule */}
