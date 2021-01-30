@@ -1,34 +1,46 @@
 import * as React from 'react';
+
 import clsx from 'clsx';
+
 import { makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Drawer from '@material-ui/core/Drawer';
-import Box from '@material-ui/core/Box';
 import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Link from '@material-ui/core/Link';
-import MenuIcon from '@material-ui/icons/Menu';
+import Box from '@material-ui/core/Box';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import Container from '@material-ui/core/Container';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Divider from '@material-ui/core/Divider';
+import Drawer from '@material-ui/core/Drawer';
+import IconButton from '@material-ui/core/IconButton';
+import Link from '@material-ui/core/Link';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListSubheader from '@material-ui/core/ListSubheader';
+import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import { mainListItems, secondaryListItems } from './listItems';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import AttachMoney from '@material-ui/icons/AttachMoney';
+import CreditCard from '@material-ui/icons/CreditCard';
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import Receipt from '@material-ui/icons/Receipt';
+import Settings from '@material-ui/icons/Settings';
+
+import Debt from './Debt';
+import Expenses from './Expenses';
+import Income from './Income';
+import Overview from './Overview';
 import RemainingBalance from './RemainingBalance';
 import Schedule from './Schedule';
-import Debts from './Debts';
-import Incomes from './Incomes';
-import Expenses from './Expenses';
 
 function Copyright() {
   return (
     <Typography variant='body2' color='textSecondary' align='center'>
-      {'Copyright © '}
+      {'Open Source Software by '}
       <Link color='inherit' href='https://github.com/jseashell'>
         John Schellinger
       </Link>{' '}
@@ -38,8 +50,18 @@ function Copyright() {
   );
 }
 
-const drawerWidth = 240;
+const State = {
+  ACCOUNT: 'Account',
+  OVERVIEW: 'Overview',
+  DEBT: 'Debt',
+  EXPENSES: 'Expenses',
+  INCOME: 'Income',
+  REMAINING_BALANCE: 'Remaining Balance',
+  SCHEDULE: 'Schedule',
+  SETTINGS: 'Settings',
+};
 
+const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -119,37 +141,29 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'hidden',
     flexDirection: 'column',
   },
-  fixedHeight: {
-    height: 340,
-    overflow: 'auto'
-  },
-  maxHeight: {
-    height: 'wrap-content'
-  }
 }));
 
 export default function Dashboard() {
   const classes = useStyles();
 
-  const [open, setOpen] = React.useState(true);
+  const [isDrawerOpen, setIsDrawerOpen] = React.useState(true);
   const toggleDrawer = () => {
-    setOpen(!open);
+    setIsDrawerOpen(!isDrawerOpen);
   };
 
-  const [showAllExpenses, setShowAllExpenses] = React.useState(false);
-  const toggleShowAllExpenses = () => {
-    setShowAllExpenses(!showAllExpenses);
-  };
+  const [dashboardState, setDashboardState] = React.useState(State.OVERVIEW);
 
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-  const maxHeightPaper = clsx(classes.paper, classes.maxHeight);
+  const setNextState = (nextState) => {
+    console.log('Setting next state "' + nextState + '".');
+    setDashboardState(nextState);
+  }
 
   return (
     <div className={classes.root}>
       <CssBaseline />
       <AppBar
         position='absolute'
-        className={clsx(classes.appBar, open && classes.appBarShift)}
+        className={clsx(classes.appBar, isDrawerOpen && classes.appBarShift)}
       >
         <Toolbar className={classes.toolbar}>
           <IconButton
@@ -157,7 +171,7 @@ export default function Dashboard() {
             color='inherit'
             aria-label='open drawer'
             onClick={toggleDrawer}
-            className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
+            className={clsx(classes.menuButton, isDrawerOpen && classes.menuButtonHidden)}
           >
             <MenuIcon />
           </IconButton>
@@ -180,9 +194,9 @@ export default function Dashboard() {
       <Drawer
         variant='permanent'
         classes={{
-          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
+          paper: clsx(classes.drawerPaper, !isDrawerOpen && classes.drawerPaperClose),
         }}
-        open={open}
+        open={isDrawerOpen}
       >
         <div className={classes.toolbarIcon}>
           <IconButton onClick={toggleDrawer}>
@@ -190,48 +204,82 @@ export default function Dashboard() {
           </IconButton>
         </div>
         <Divider />
-        <List>{mainListItems}</List>
+        <List>
+          <ListItem
+            button
+          // onClick={setNextState(State.OVERVIEW)}
+          >
+            <ListItemIcon>
+              <DashboardIcon />
+            </ListItemIcon>
+            <ListItemText primary={State.OVERVIEW} />
+          </ListItem>
+          <ListItem
+            button
+          // onClick={setNextState(State.DEBT)}
+          >
+            <ListItemIcon>
+              <CreditCard />
+            </ListItemIcon>
+            <ListItemText primary={State.DEBT} />
+          </ListItem>
+          <ListItem
+            button
+          // onClick={setNextState(State.EXPENSES)}
+          >
+            <ListItemIcon>
+              <Receipt />
+            </ListItemIcon>
+            <ListItemText primary={State.EXPENSES} />
+          </ListItem>
+          <ListItem
+            button
+          // onClick={setNextState(State.INCOME)}
+          >
+            <ListItemIcon>
+              <AttachMoney />
+            </ListItemIcon>
+            <ListItemText primary={State.INCOME} />
+          </ListItem>
+        </List>
         <Divider />
-        <List>{secondaryListItems}</List>
+        <List>
+          <ListSubheader inset>Manage</ListSubheader>
+          <ListItem button>
+            <ListItemIcon>
+              <AccountCircle />
+            </ListItemIcon>
+            <ListItemText primary='Account' />
+          </ListItem>
+          <ListItem button>
+            <ListItemIcon>
+              <Settings />
+            </ListItemIcon>
+            <ListItemText primary='Settings' />
+          </ListItem>
+        </List>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth='lg' className={classes.container}>
-          <Grid container spacing={3}>
-            {/* Incomes */}
-            <Grid item xs={4}>
-              <Paper className={fixedHeightPaper}>
-                <Incomes />
-              </Paper>
-            </Grid>
-            {/* Debts */}
-            <Grid item xs={5}>
-              <Paper className={fixedHeightPaper}>
-                <Debts />
-              </Paper>
-            </Grid>
-            {/* Remaining Balance */}
-            <Grid item xs={3}>
-              <Paper className={fixedHeightPaper}>
-                <RemainingBalance />
-              </Paper>
-            </Grid>
-            {/* Expenses */}
-            <Grid item xs={12}>
-              <Paper className={showAllExpenses ? maxHeightPaper : fixedHeightPaper}>
-                <Expenses
-                  toggleShowAll={toggleShowAllExpenses}
-                  showAll={showAllExpenses}
-                />
-              </Paper>
-            </Grid>
-            {/* Schedule */}
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                <Schedule />
-              </Paper>
-            </Grid>
-          </Grid>
+          {dashboardState === State.OVERVIEW &&
+            <Overview />
+          }
+          {dashboardState === State.DEBT &&
+            <Debt />
+          }
+          {dashboardState === State.EXPENSES &&
+            <Expenses />
+          }
+          {dashboardState === State.INCOME &&
+            <Income />
+          }
+          {dashboardState === State.REMAINING_BALANCE &&
+            <RemainingBalance />
+          }
+          {dashboardState === State.SCHEDULE &&
+            <Schedule />
+          }
           <Box sx={{ pt: 4 }}>
             <Copyright />
           </Box>
