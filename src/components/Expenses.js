@@ -1,22 +1,12 @@
 import * as React from 'react';
 import _ from 'lodash';
-import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-
 import { DataGrid } from '@material-ui/data-grid';
 import Title from './Title';
 
 const useStyles = makeStyles((theme) => {
     return {
-        table: {
-            minWidth: 100,
-        },
         dataGridContainer: {
             display: 'flex',
             height: '100%'
