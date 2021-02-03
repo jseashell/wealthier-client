@@ -130,13 +130,10 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     overflow: 'hidden',
     flexDirection: 'column',
-<<<<<<< HEAD
-=======
   },
   minHeight: {
     height: 'wrap-content'
->>>>>>> Move Paper components from Dashboard to children components
-  }
+  },
 }));
 
 // export const style = {
@@ -213,21 +210,6 @@ export default function Dashboard() {
             <Overview title={State.OVERVIEW} />
           }
           {dashboardState === State.DEBT &&
-<<<<<<< HEAD
-            <Debt title={State.DEBT} xs={12} />
-          }
-          {dashboardState === State.EXPENSES &&
-            <Expenses title={State.EXPENSES} xs={12} />
-          }
-          {dashboardState === State.INCOME &&
-            <Income title={State.INCOME} xs={12} />
-          }
-          {dashboardState === State.REMAINING_BALANCE &&
-            <RemainingBalance title={State.REMAINING_BALANCE} xs={12} />
-          }
-          {dashboardState === State.SCHEDULE &&
-            <Schedule title={State.SCHEDULE} xs={12} />
-=======
             <Debt title={State.DEBT} xs={12} paperHeight={classes.minHeight} />
           }
           {dashboardState === State.EXPENSES &&
@@ -241,7 +223,6 @@ export default function Dashboard() {
           }
           {dashboardState === State.SCHEDULE &&
             <Schedule title={State.SCHEDULE} xs={12} paperHeight={classes.minHeight} />
->>>>>>> Move Paper components from Dashboard to children components
           }
           <Box sx={{ pt: 4 }}>
             <Copyright />
