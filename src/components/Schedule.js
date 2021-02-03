@@ -1,5 +1,7 @@
 import * as React from 'react';
+
 import _ from 'lodash';
+
 import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -7,6 +9,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+
 import Title from './Title';
 
 function preventDefault(event) {
@@ -22,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Schedule() {
+export default function Schedule(props) {
   const [paymentSchedule, setPaymentSchedule] = React.useState([]);
 
   React.useEffect(() => {
@@ -42,7 +45,7 @@ export default function Schedule() {
   const classes = useStyles();
   return (
     <React.Fragment>
-      <Title>Payment Schedule</Title>
+      <Title>{props.title}</Title>
       <Table className='table' size='small'>
         <TableHead>
           <TableRow>

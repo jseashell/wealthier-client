@@ -1,12 +1,15 @@
 import * as React from 'react';
+
 import Link from '@material-ui/core/Link';
-import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+
+import { makeStyles } from '@material-ui/core/styles';
+
 import Title from './Title';
 
 function preventDefault(event) {
@@ -16,6 +19,7 @@ function preventDefault(event) {
 const useStyles = makeStyles((theme) => {
     return {
         scrollPane: {
+            maxHeight: 240,
             overflow: 'auto'
         },
         viewDetails: {
@@ -24,39 +28,37 @@ const useStyles = makeStyles((theme) => {
     };
 });
 
-export default function Debts() {
-    const [debts, setDebts] = React.useState([]);
+export default function Incomes(props) {
+    const [incomes, setIncomes] = React.useState([]);
 
     React.useEffect(() => {
-        async function fetchAllDebts() {
-            await fetch('/debt/all')
+        async function fetchAllIncomes() {
+            await fetch('/income/all')
                 .then(res => res.json())
-                .then(data => setDebts(data))
+                .then(data => setIncomes(data))
                 .catch(error => console.log(error));
         }
 
-        fetchAllDebts();
+        fetchAllIncomes();
     }, []);
 
-    const classes = useStyles();;
+    const classes = useStyles();
     return (
         <React.Fragment>
-            <Title>Debts</Title>
+            <Title>{props.title}</Title>
             <Paper className={classes.scrollPane}>
                 <Table className={classes.table}>
                     <TableHead>
                         <TableRow>
-                            <TableCell>Credit Card</TableCell>
-                            <TableCell>Owner</TableCell>
+                            <TableCell>User</TableCell>
                             <TableCell align='right'>Amount</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {debts.map((row) => (
-                            <TableRow key={row._id}>
-                                <TableCell><a href={row.bankUrl}>{row.name}</a></TableCell>
-                                <TableCell>{row.userFirstName}</TableCell>
-                                <TableCell align='right'>${row.value.toFixed(2)}</TableCell>
+                        {incomes.map((income) => (
+                            <TableRow key={income._id}>
+                                <TableCell>{income.userFirstName}</TableCell>
+                                <TableCell align='right'>${income.value.toFixed(2)}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

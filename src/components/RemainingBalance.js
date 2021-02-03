@@ -1,7 +1,10 @@
 import * as React from 'react';
+
 import Link from '@material-ui/core/Link';
-import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+
+import { makeStyles } from '@material-ui/core/styles';
+
 import Title from './Title';
 
 function preventDefault(event) {
@@ -16,7 +19,7 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-export default function RemainingBalance() {
+export default function RemainingBalance(props) {
   const [data, setData] = React.useState({ remainingBalance: null });
 
   React.useEffect(() => {
@@ -37,7 +40,7 @@ export default function RemainingBalance() {
   const classes = useStyles();
   return (
     <React.Fragment>
-      <Title>Remaining Balance</Title>
+      <Title>{props.title}</Title>
       <Typography component='p' variant='h4'>
         {data.remainingBalance}
       </Typography>
