@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -27,7 +28,7 @@ const useStyles = makeStyles((theme) => {
     };
 });
 
-export default function Debts(props) {
+export default function Debt(props) {
     const [debts, setDebts] = React.useState([]);
 
     React.useEffect(() => {
@@ -44,32 +45,34 @@ export default function Debts(props) {
     const classes = useStyles();;
     return (
         <React.Fragment>
-            <Title>{props.title}</Title>
-            <Paper className={classes.scrollPane}>
-                <Table className={classes.table}>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Credit Card</TableCell>
-                            <TableCell>Owner</TableCell>
-                            <TableCell align='right'>Amount</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {debts.map((row) => (
-                            <TableRow key={row._id}>
-                                <TableCell><a href={row.bankUrl}>{row.name}</a></TableCell>
-                                <TableCell>{row.userFirstName}</TableCell>
-                                <TableCell align='right'>${row.value.toFixed(2)}</TableCell>
+            <Paper className={props.paperClassName}>
+                <Title>{props.title}</Title>
+                <Paper className={classes.scrollPane}>
+                    <Table className={classes.table}>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Credit Card</TableCell>
+                                <TableCell>Owner</TableCell>
+                                <TableCell align='right'>Amount</TableCell>
                             </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </Paper>
-            <div className={classes.viewDetails}>
-                <Link color='primary' href='#' onClick={preventDefault}>
-                    View Details
+                        </TableHead>
+                        <TableBody>
+                            {debts.map((row) => (
+                                <TableRow key={row._id}>
+                                    <TableCell><a href={row.bankUrl}>{row.name}</a></TableCell>
+                                    <TableCell>{row.userFirstName}</TableCell>
+                                    <TableCell align='right'>${row.value.toFixed(2)}</TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </Paper>
+                <div className={classes.viewDetails}>
+                    <Link color='primary' href='#' onClick={preventDefault}>
+                        View Details
                 </Link>
-            </div>
+                </div>
+            </Paper>
         </React.Fragment >
     );
 }

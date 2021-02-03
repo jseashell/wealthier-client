@@ -51,9 +51,7 @@ export default function Overview(props) {
                     </Paper>
                 </Grid>
                 <Grid item xs={5}>
-                    <Paper className={fixedHeightPaper}>
-                        <Debt />
-                    </Paper>
+                    <Debt paperClassName={fixedHeightPaper} />
                 </Grid>
                 <Grid item xs={3}>
                     <Paper className={fixedHeightPaper}>

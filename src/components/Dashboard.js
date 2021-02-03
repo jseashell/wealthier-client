@@ -130,8 +130,12 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     overflow: 'hidden',
     flexDirection: 'column',
-  },
+  }
 }));
+
+// export const style = {
+
+// }
 
 export default function Dashboard() {
   const classes = useStyles();
@@ -203,19 +207,19 @@ export default function Dashboard() {
             <Overview title={State.OVERVIEW} />
           }
           {dashboardState === State.DEBT &&
-            <Debt title={State.DEBT} />
+            <Debt title={State.DEBT} xs={12} />
           }
           {dashboardState === State.EXPENSES &&
-            <Expenses title={State.EXPENSES} />
+            <Expenses title={State.EXPENSES} xs={12} />
           }
           {dashboardState === State.INCOME &&
-            <Income title={State.INCOME} />
+            <Income title={State.INCOME} xs={12} />
           }
           {dashboardState === State.REMAINING_BALANCE &&
-            <RemainingBalance title={State.REMAINING_BALANCE} />
+            <RemainingBalance title={State.REMAINING_BALANCE} xs={12} />
           }
           {dashboardState === State.SCHEDULE &&
-            <Schedule title={State.SCHEDULE} />
+            <Schedule title={State.SCHEDULE} xs={12} />
           }
           <Box sx={{ pt: 4 }}>
             <Copyright />
