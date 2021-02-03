@@ -1,12 +1,15 @@
 import * as React from 'react';
+
 import Link from '@material-ui/core/Link';
-import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+
+import { makeStyles } from '@material-ui/core/styles';
+
 import Title from './Title';
 
 function preventDefault(event) {
@@ -25,7 +28,7 @@ const useStyles = makeStyles((theme) => {
     };
 });
 
-export default function Incomes() {
+export default function Incomes(props) {
     const [incomes, setIncomes] = React.useState([]);
 
     React.useEffect(() => {
@@ -42,7 +45,7 @@ export default function Incomes() {
     const classes = useStyles();
     return (
         <React.Fragment>
-            <Title>Incomes</Title>
+            <Title>{props.title}</Title>
             <Paper className={classes.scrollPane}>
                 <Table className={classes.table}>
                     <TableHead>

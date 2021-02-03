@@ -2,7 +2,6 @@ import * as React from 'react';
 
 import clsx from 'clsx';
 
-import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Badge from '@material-ui/core/Badge';
 import Box from '@material-ui/core/Box';
@@ -17,6 +16,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+
+import { makeStyles } from '@material-ui/core/styles';
 
 import Debt from './Debt';
 import Expenses from './Expenses';
@@ -199,22 +200,22 @@ export default function Dashboard() {
         <div className={classes.appBarSpacer} />
         <Container maxWidth='lg' className={classes.container}>
           {dashboardState === State.OVERVIEW &&
-            <Overview />
+            <Overview title={State.OVERVIEW} />
           }
           {dashboardState === State.DEBT &&
-            <Debt />
+            <Debt title={State.DEBT} />
           }
           {dashboardState === State.EXPENSES &&
-            <Expenses />
+            <Expenses title={State.EXPENSES} />
           }
           {dashboardState === State.INCOME &&
-            <Income />
+            <Income title={State.INCOME} />
           }
           {dashboardState === State.REMAINING_BALANCE &&
-            <RemainingBalance />
+            <RemainingBalance title={State.REMAINING_BALANCE} />
           }
           {dashboardState === State.SCHEDULE &&
-            <Schedule />
+            <Schedule title={State.SCHEDULE} />
           }
           <Box sx={{ pt: 4 }}>
             <Copyright />

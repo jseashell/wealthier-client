@@ -19,7 +19,7 @@ import { State } from './Dashboard';
 export default function NavDrawerItems(props) {
 
 	return (
-		<div>
+		<>
 			<List>
 				<ListItem
 					button
@@ -74,6 +74,6 @@ export default function NavDrawerItems(props) {
 					<ListItemText primary='Settings' />
 				</ListItem>
 			</List>
-		</div>
+		</>
 	);
 }

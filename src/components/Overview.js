@@ -12,6 +12,7 @@ import Expenses from './Expenses';
 import Income from './Income';
 import RemainingBalance from './RemainingBalance';
 import Schedule from './Schedule';
+import Title from './Title';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -29,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function Overview() {
+export default function Overview(props) {
     const classes = useStyles();
 
     const [showAllExpenses, setShowAllExpenses] = React.useState(false);
@@ -41,35 +42,38 @@ export default function Overview() {
     const maxHeightPaper = clsx(classes.paper, classes.maxHeight);
 
     return (
-        <Grid container spacing={3}>
-            <Grid item xs={4}>
-                <Paper className={fixedHeightPaper}>
-                    <Income />
-                </Paper>
+        <React.Fragment>
+            <Title>{props.title}</Title>
+            <Grid container spacing={3}>
+                <Grid item xs={4}>
+                    <Paper className={fixedHeightPaper}>
+                        <Income />
+                    </Paper>
+                </Grid>
+                <Grid item xs={5}>
+                    <Paper className={fixedHeightPaper}>
+                        <Debt />
+                    </Paper>
+                </Grid>
+                <Grid item xs={3}>
+                    <Paper className={fixedHeightPaper}>
+                        <RemainingBalance />
+                    </Paper>
+                </Grid>
+                <Grid item xs={12}>
+                    <Paper className={showAllExpenses ? maxHeightPaper : fixedHeightPaper}>
+                        <Expenses
+                            toggleShowAll={toggleShowAllExpenses}
+                            showAll={showAllExpenses}
+                        />
+                    </Paper>
+                </Grid>
+                <Grid item xs={12}>
+                    <Paper className={classes.paper}>
+                        <Schedule />
+                    </Paper>
+                </Grid>
             </Grid>
-            <Grid item xs={5}>
-                <Paper className={fixedHeightPaper}>
-                    <Debt />
-                </Paper>
-            </Grid>
-            <Grid item xs={3}>
-                <Paper className={fixedHeightPaper}>
-                    <RemainingBalance />
-                </Paper>
-            </Grid>
-            <Grid item xs={12}>
-                <Paper className={showAllExpenses ? maxHeightPaper : fixedHeightPaper}>
-                    <Expenses
-                        toggleShowAll={toggleShowAllExpenses}
-                        showAll={showAllExpenses}
-                    />
-                </Paper>
-            </Grid>
-            <Grid item xs={12}>
-                <Paper className={classes.paper}>
-                    <Schedule />
-                </Paper>
-            </Grid>
-        </Grid>
+        </React.Fragment>
     )
 }
