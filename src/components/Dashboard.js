@@ -13,27 +13,16 @@ import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import IconButton from '@material-ui/core/IconButton';
 import Link from '@material-ui/core/Link';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListSubheader from '@material-ui/core/ListSubheader';
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import AttachMoney from '@material-ui/icons/AttachMoney';
-import CreditCard from '@material-ui/icons/CreditCard';
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import Receipt from '@material-ui/icons/Receipt';
-import Settings from '@material-ui/icons/Settings';
-
 import Debt from './Debt';
 import Expenses from './Expenses';
 import Income from './Income';
 import Overview from './Overview';
+import NavList from './NavList';
 import RemainingBalance from './RemainingBalance';
 import Schedule from './Schedule';
 
@@ -50,7 +39,7 @@ function Copyright() {
   );
 }
 
-const State = {
+export const State = {
   ACCOUNT: 'Account',
   OVERVIEW: 'Overview',
   DEBT: 'Debt',
@@ -204,60 +193,7 @@ export default function Dashboard() {
           </IconButton>
         </div>
         <Divider />
-        <List>
-          <ListItem
-            button
-          // onClick={setNextState(State.OVERVIEW)}
-          >
-            <ListItemIcon>
-              <DashboardIcon />
-            </ListItemIcon>
-            <ListItemText primary={State.OVERVIEW} />
-          </ListItem>
-          <ListItem
-            button
-          // onClick={setNextState(State.DEBT)}
-          >
-            <ListItemIcon>
-              <CreditCard />
-            </ListItemIcon>
-            <ListItemText primary={State.DEBT} />
-          </ListItem>
-          <ListItem
-            button
-          // onClick={setNextState(State.EXPENSES)}
-          >
-            <ListItemIcon>
-              <Receipt />
-            </ListItemIcon>
-            <ListItemText primary={State.EXPENSES} />
-          </ListItem>
-          <ListItem
-            button
-          // onClick={setNextState(State.INCOME)}
-          >
-            <ListItemIcon>
-              <AttachMoney />
-            </ListItemIcon>
-            <ListItemText primary={State.INCOME} />
-          </ListItem>
-        </List>
-        <Divider />
-        <List>
-          <ListSubheader inset>Manage</ListSubheader>
-          <ListItem button>
-            <ListItemIcon>
-              <AccountCircle />
-            </ListItemIcon>
-            <ListItemText primary='Account' />
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-              <Settings />
-            </ListItemIcon>
-            <ListItemText primary='Settings' />
-          </ListItem>
-        </List>
+        <NavList setNextState={setNextState} />
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
