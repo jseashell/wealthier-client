@@ -1,6 +1,7 @@
 import * as React from 'react';
 
-import Grid from '@material-ui/core/Grid';
+import clsx from 'clsx';
+
 import Link from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -25,6 +26,12 @@ const useStyles = makeStyles((theme) => {
         },
         viewDetails: {
             marginTop: theme.spacing(3),
+        },
+        paper: {
+            padding: theme.spacing(2),
+            display: 'flex',
+            overflow: 'hidden',
+            flexDirection: 'column',
         }
     };
 });
@@ -44,32 +51,37 @@ export default function Incomes(props) {
     }, []);
 
     const classes = useStyles();
+
+    const minHeightPaper = clsx(classes.paper, props.paperHeight);
+
     return (
         <React.Fragment>
-            <Title>{props.title}</Title>
-            <Paper className={classes.scrollPane}>
-                <Table className={classes.table}>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>User</TableCell>
-                            <TableCell align='right'>Amount</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {incomes.map((income) => (
-                            <TableRow key={income._id}>
-                                <TableCell>{income.userFirstName}</TableCell>
-                                <TableCell align='right'>${income.value.toFixed(2)}</TableCell>
+            <Paper className={minHeightPaper}>
+                <Title>{props.title}</Title>
+                <Paper className={classes.scrollPane}>
+                    <Table className={classes.table}>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>User</TableCell>
+                                <TableCell align='right'>Amount</TableCell>
                             </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </Paper>
-            <div className={classes.viewDetails}>
-                <Link color='primary' href='#' onClick={preventDefault}>
-                    View Details
+                        </TableHead>
+                        <TableBody>
+                            {incomes.map((income) => (
+                                <TableRow key={income._id}>
+                                    <TableCell>{income.userFirstName}</TableCell>
+                                    <TableCell align='right'>${income.value.toFixed(2)}</TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </Paper>
+                <div className={classes.viewDetails}>
+                    <Link color='primary' href='#' onClick={preventDefault}>
+                        View Details
                 </Link>
-            </div>
+                </div>
+            </Paper>
         </React.Fragment >
     );
 }

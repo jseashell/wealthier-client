@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
         height: 340,
         overflow: 'auto'
     },
-    maxHeight: {
+    minHeight: {
         height: 'wrap-content'
     }
 }));
@@ -39,37 +39,30 @@ export default function Overview(props) {
     };
 
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-    const maxHeightPaper = clsx(classes.paper, classes.maxHeight);
+    const minHeightPaper = clsx(classes.paper, classes.minHeight);
 
     return (
         <React.Fragment>
             <Title>{props.title}</Title>
             <Grid container spacing={3}>
                 <Grid item xs={4}>
-                    <Paper className={fixedHeightPaper}>
-                        <Income />
-                    </Paper>
+                    <Income paperHeight={fixedHeightPaper} />
                 </Grid>
                 <Grid item xs={5}>
-                    <Debt paperClassName={fixedHeightPaper} />
+                    <Debt paperHeight={fixedHeightPaper} />
                 </Grid>
                 <Grid item xs={3}>
-                    <Paper className={fixedHeightPaper}>
-                        <RemainingBalance />
-                    </Paper>
+                    <RemainingBalance paperHeight={fixedHeightPaper} />
                 </Grid>
                 <Grid item xs={12}>
-                    <Paper className={showAllExpenses ? maxHeightPaper : fixedHeightPaper}>
-                        <Expenses
-                            toggleShowAll={toggleShowAllExpenses}
-                            showAll={showAllExpenses}
-                        />
-                    </Paper>
+                    <Expenses
+                        paperHeight={showAllExpenses ? minHeightPaper : fixedHeightPaper}
+                        toggleShowAll={toggleShowAllExpenses}
+                        showAll={showAllExpenses}
+                    />
                 </Grid>
                 <Grid item xs={12}>
-                    <Paper className={classes.paper}>
-                        <Schedule />
-                    </Paper>
+                    <Schedule paperHeight={minHeightPaper} />
                 </Grid>
             </Grid>
         </React.Fragment>

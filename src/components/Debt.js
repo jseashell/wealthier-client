@@ -1,6 +1,7 @@
 import * as React from 'react';
 
-import Grid from '@material-ui/core/Grid';
+import clsx from 'clsx';
+
 import Link from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -24,6 +25,12 @@ const useStyles = makeStyles((theme) => {
         },
         viewDetails: {
             marginTop: theme.spacing(3),
+        },
+        paper: {
+            padding: theme.spacing(2),
+            display: 'flex',
+            overflow: 'hidden',
+            flexDirection: 'column',
         }
     };
 });
@@ -42,10 +49,13 @@ export default function Debt(props) {
         fetchAllDebts();
     }, []);
 
-    const classes = useStyles();;
+    const classes = useStyles();
+
+    const minHeightPaper = clsx(classes.paper, props.paperHeight);
+
     return (
         <React.Fragment>
-            <Paper className={props.paperClassName}>
+            <Paper className={minHeightPaper}>
                 <Title>{props.title}</Title>
                 <Paper className={classes.scrollPane}>
                     <Table className={classes.table}>

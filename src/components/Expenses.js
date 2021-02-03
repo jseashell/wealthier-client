@@ -1,7 +1,8 @@
 import * as React from 'react';
 import _ from 'lodash';
 
-import Grid from '@material-ui/core/Grid';
+import clsx from 'clsx';
+
 import Link from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -21,6 +22,12 @@ const useStyles = makeStyles((theme) => {
         },
         showAll: {
             marginTop: theme.spacing(3),
+        },
+        paper: {
+            padding: theme.spacing(2),
+            display: 'flex',
+            overflow: 'hidden',
+            flexDirection: 'column',
         }
     };
 });
@@ -43,36 +50,41 @@ export default function Expenses(props) {
     }, []);
 
     const classes = useStyles();
+
+    const minHeightPaper = clsx(classes.paper, props.paperHeight);
+
     return (
         <React.Fragment>
-            <Title>{props.title}</Title>
-            <Paper>
-                <Table className={classes.table}>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Name</TableCell>
-                            <TableCell>Payee</TableCell>
-                            <TableCell>Owner</TableCell>
-                            <TableCell align='right'>Amount</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {_.take(expenses, props.showAll ? expenses.length : 3).map((expense) => (
-                            <TableRow key={expense._id}>
-                                <TableCell>{expense.name}</TableCell>
-                                <TableCell>{expense.payee}</TableCell>
-                                <TableCell>{expense.userFirstName}</TableCell>
-                                <TableCell align='right'>${expense.value.toFixed(2)}</TableCell>
+            <Paper className={minHeightPaper}>
+                <Title>{props.title}</Title>
+                <Paper>
+                    <Table className={classes.table}>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Name</TableCell>
+                                <TableCell>Payee</TableCell>
+                                <TableCell>Owner</TableCell>
+                                <TableCell align='right'>Amount</TableCell>
                             </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
+                        </TableHead>
+                        <TableBody>
+                            {_.take(expenses, props.showAll ? expenses.length : 3).map((expense) => (
+                                <TableRow key={expense._id}>
+                                    <TableCell>{expense.name}</TableCell>
+                                    <TableCell>{expense.payee}</TableCell>
+                                    <TableCell>{expense.userFirstName}</TableCell>
+                                    <TableCell align='right'>${expense.value.toFixed(2)}</TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </Paper>
+                <div className={classes.showAll}>
+                    <Link color='primary' href='#' onClick={props.toggleShowAll}>
+                        {props.showAll ? 'Show less' : 'Show ' + (expenses.length - 3) + ' more'}
+                    </Link>
+                </div>
             </Paper>
-            <div className={classes.showAll}>
-                <Link color='primary' href='#' onClick={props.toggleShowAll}>
-                    {props.showAll ? 'Show less' : 'Show ' + (expenses.length - 3) + ' more'}
-                </Link>
-            </div>
         </React.Fragment >
     );
 }

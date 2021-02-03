@@ -17,7 +17,6 @@ import Settings from '@material-ui/icons/Settings';
 import { State } from './Dashboard';
 
 export default function NavDrawerItems(props) {
-
 	return (
 		<>
 			<List>
@@ -56,6 +55,15 @@ export default function NavDrawerItems(props) {
 						<AttachMoney />
 					</ListItemIcon>
 					<ListItemText primary={State.INCOME} />
+				</ListItem>
+				<ListItem
+					button
+					onClick={() => props.setNextState(State.SCHEDULE)}
+				>
+					<ListItemIcon>
+						<AttachMoney />
+					</ListItemIcon>
+					<ListItemText primary={State.SCHEDULE} />
 				</ListItem>
 			</List>
 			<Divider />
