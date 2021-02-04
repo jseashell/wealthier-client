@@ -3,7 +3,6 @@ import * as React from 'react';
 import clsx from 'clsx';
 
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -13,6 +12,8 @@ import Income from './Income';
 import RemainingBalance from './RemainingBalance';
 import Schedule from './Schedule';
 import Title from './Title';
+
+import { State } from './Dashboard';
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -46,23 +47,36 @@ export default function Overview(props) {
 			<Title>{props.title}</Title>
 			<Grid container spacing={3}>
 				<Grid item xs={4}>
-					<Income paperHeight={fixedHeightPaper} />
+					<Income
+						title={State.INCOME}
+						paperHeight={fixedHeightPaper}
+					/>
 				</Grid>
 				<Grid item xs={5}>
-					<Debt paperHeight={fixedHeightPaper} />
+					<Debt
+						title={State.DEBT}
+						paperHeight={fixedHeightPaper}
+					/>
 				</Grid>
 				<Grid item xs={3}>
-					<RemainingBalance paperHeight={fixedHeightPaper} />
+					<RemainingBalance
+						title={State.REMAINING_BALANCE}
+						paperHeight={fixedHeightPaper}
+					/>
 				</Grid>
 				<Grid item xs={12}>
 					<Expenses
+						title={State.EXPENSES}
 						paperHeight={showAllExpenses ? minHeightPaper : fixedHeightPaper}
 						toggleShowAll={toggleShowAllExpenses}
 						showAll={showAllExpenses}
 					/>
 				</Grid>
 				<Grid item xs={12}>
-					<Schedule paperHeight={minHeightPaper} />
+					<Schedule
+						title={State.SCHEDULE}
+						paperHeight={minHeightPaper}
+					/>
 				</Grid>
 			</Grid>
 		</React.Fragment>
