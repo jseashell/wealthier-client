@@ -56,6 +56,7 @@ export default function NavDrawerItems(props) {
 					</ListItemIcon>
 					<ListItemText primary={State.INCOME} />
 				</ListItem>
+				<Divider />
 				<ListItem
 					button
 					onClick={() => props.setNextState(State.SCHEDULE)}
@@ -64,22 +65,6 @@ export default function NavDrawerItems(props) {
 						<AttachMoney />
 					</ListItemIcon>
 					<ListItemText primary={State.SCHEDULE} />
-				</ListItem>
-			</List>
-			<Divider />
-			<List>
-				<ListSubheader inset>Manage</ListSubheader>
-				<ListItem button>
-					<ListItemIcon>
-						<AccountCircle />
-					</ListItemIcon>
-					<ListItemText primary='Account' />
-				</ListItem>
-				<ListItem button>
-					<ListItemIcon>
-						<Settings />
-					</ListItemIcon>
-					<ListItemText primary='Settings' />
 				</ListItem>
 			</List>
 		</>

@@ -3,6 +3,7 @@ import * as React from 'react';
 import clsx from 'clsx';
 
 import AppBar from '@material-ui/core/AppBar';
+import AccountIcon from '@material-ui/icons/AccountCircle';
 import Badge from '@material-ui/core/Badge';
 import Box from '@material-ui/core/Box';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
@@ -26,6 +27,7 @@ import Overview from './Overview';
 import NavList from './NavList';
 import RemainingBalance from './RemainingBalance';
 import Schedule from './Schedule';
+import Settings from './Settings';
 
 function Copyright() {
 	return (
@@ -175,11 +177,16 @@ export default function Dashboard() {
 						noWrap
 						className={classes.title}
 					>
-						Dashboard
+						Wealthier
          			</Typography>
 					<IconButton color='inherit'>
 						<Badge badgeContent={4} color='secondary'>
 							<NotificationsIcon />
+						</Badge>
+					</IconButton>
+					<IconButton color='inherit'>
+						<Badge badgeContent={4} color='secondary'>
+							<AccountIcon onClick={() => setNextState(State.SETTINGS)} />
 						</Badge>
 					</IconButton>
 				</Toolbar>
@@ -219,6 +226,9 @@ export default function Dashboard() {
 					}
 					{dashboardState === State.SCHEDULE &&
 						<Schedule title={State.SCHEDULE} xs={12} paperHeight={classes.minHeight} />
+					}
+					{dashboardState === State.SETTINGS &&
+						<Settings title={State.SETTINGS} xs={12} paperHeight={classes.minHeight} />
 					}
 					<Box sx={{ pt: 4 }}>
 						<Copyright />
