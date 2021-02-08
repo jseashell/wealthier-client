@@ -3,6 +3,7 @@ import clsx from 'clsx';
 
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
+import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Paper from '@material-ui/core/paper';
@@ -21,6 +22,9 @@ const useStyles = makeStyles((theme) => {
 			paddingTop: theme.spacing(2),
 			paddingBottom: theme.spacing(2),
 		},
+		settingContainer: {
+			padding: theme.spacing(2),
+		},
 		paper: {
 			padding: theme.spacing(2),
 			display: 'flex',
@@ -30,6 +34,11 @@ const useStyles = makeStyles((theme) => {
 	};
 });
 
+function EmptyGridItem(xs) {
+	return (
+		<Grid item xs={6} />
+	)
+}
 export default function Settings(props) {
 	const [isEmailOptOut, setIsEmailOptOut] = React.useState(false); // init to email notifs being activated
 
@@ -42,37 +51,51 @@ export default function Settings(props) {
 				<Title>{props.title}</Title>
 				<Paper className={classes.scrollPane}>
 					<form>
-						<Grid container spacing={2}>
-							<Grid item xs={12}>
-								<TextField id='first-name-setting' label='First name' />
+						<Grid container
+							spacing={0}
+							direction="row"
+							alignItems="flex-start"
+						>
+							<Grid item xs={3} className={classes.settingContainer}>
+								<TextField id='first-name-setting' label='First name' fullWidth />
 							</Grid>
-							<Grid item xs={12}>
-								<TextField id='last-name-setting' label='Last name' />
+							<Grid item xs={3} className={classes.settingContainer}>
+								<TextField id='last-name-setting' label='Last name' fullWidth />
 							</Grid>
-							<Grid item xs={12}>
-								<TextField id='email-setting' label='Email' />
+							<Grid item xs={6} />
+
+							<Grid item xs={6} className={classes.settingContainer}>
+								<TextField id='email-setting' label='Email' fullWidth required />
 							</Grid>
-							<Grid item xs={12}>
+							<Grid item xs={6} />
+
+							<Grid item xs={3} className={classes.settingContainer}>
 								<TextField id='current-password-setting' label='Current password' type='password' />
 							</Grid>
-							<Grid item xs={12}>
-								<TextField id='new-password-setting' label='New password' type='password' />
+							<Grid item xs={9} />
+
+							<Grid item xs={3} className={classes.settingContainer}>
+								<TextField id='new-password-setting' label='New password' type='password' disabled />
 							</Grid>
-							<Grid item xs={12}>
+							<Grid item xs={9} />
+
+							<Grid item xs={12} className={classes.settingContainer}>
 								<FormControlLabel
 									control={
 										<Checkbox
 											checked={!isEmailOptOut}
 											onChange={() => setIsEmailOptOut(!isEmailOptOut)}
-											name="emailOptOut"
+											name="isEmailOptOut"
 											color="primary"
 										/>
 									}
 									label='I would like to receive emails about Wealthier news and updates.'
 								/>
 							</Grid>
+							<Grid item xs={12} className={classes.settingContainer}>
+								<Button>Submit</Button>
+							</Grid>
 						</Grid>
-						<Button>Submit</Button>
 					</form>
 				</Paper>
 			</Paper>

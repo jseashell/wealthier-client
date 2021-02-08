@@ -185,7 +185,7 @@ export default function Dashboard() {
 						</Badge>
 					</IconButton>
 					<IconButton color='inherit'>
-						<Badge badgeContent={4} color='secondary'>
+						<Badge color='secondary'>
 							<AccountIcon onClick={() => setNextState(State.SETTINGS)} />
 						</Badge>
 					</IconButton>
